@@ -45,17 +45,10 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = $request->user();
-
-        $tokenResult = $user->createToken('MyTransaction');
-        $token = $tokenResult->token;
-
-        $token->save();
+        $accessToken = Auth::user()->createToken('MyTransaction')->accessToken;
 
         return response()->json([
-            'token' => $tokenResult->accessToken,
-            'token_type'=> 'Bearer',
-            'message' => 'Login Berhasil!'
+            'user' => Auth::user(), 'access_token' => $accessToken
         ]);
     }
 
